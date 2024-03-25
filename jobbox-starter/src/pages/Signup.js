@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import loginImage from "../assets/login.svg";
+import { toast } from 'react-hot-toast';
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { createUser } from "../redux/features/Auth/authSlice";
 const Signup = () => {
   const { handleSubmit, register, reset, control } = useForm();
+  const {email,isLoading,isError,error} = useSelector(state=>state.auth)
   const password = useWatch({ control, name: "password" });
   const confirmPassword = useWatch({ control, name: "confirmPassword" });
   const navigate = useNavigate();
@@ -30,6 +32,10 @@ const Signup = () => {
     // console.log(data);
     dispatch(createUser({email,password}))
   };
+  useEffect(()=>{
+    if(isError)
+    toast.error (error) 
+  },[isError,error])
 
   return (
     <div className='flex h-screen items-center pt-14'>
