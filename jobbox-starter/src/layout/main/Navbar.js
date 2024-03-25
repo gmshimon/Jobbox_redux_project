@@ -9,7 +9,7 @@ import { logOut } from "../../redux/features/Auth/authSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const {email} = useSelector((state)=>state.auth)
+  const {email,role} = useSelector((state)=>state.auth)
   const handleSignout = () =>{
     signOut(auth).then(()=>{
       dispatch(logOut())
@@ -30,7 +30,26 @@ const Navbar = () => {
             Jobs
           </Link>
         </li>
-
+        {
+          email &&role&& (
+            <li>
+              
+              <Link className='hover:text-primary' to='/dashboard'>
+                Dashboard
+              </Link>
+            </li>
+          )
+        }
+        {
+          email &&!role && (
+            <li>
+              
+              <Link className='hover:text-primary' to='/register'>
+                Register
+              </Link>
+            </li>
+          )
+        }
         {
           email?<button onClick={handleSignout}>Logout</button>:<li>
           <Link
