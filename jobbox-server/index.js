@@ -9,7 +9,8 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.q66zrl2.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.q66zrl2.mongodb.net/?retryWrites=true&w=majority`;
+const uri = 'mongodb://localhost:27017'
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -32,7 +33,7 @@ const run = async () => {
 
     app.get("/user/:email", async (req, res) => {
       const email = req.params.email;
-
+      console.log(email);
       const result = await userCollection.findOne({ email });
 
       if (result?.email) {

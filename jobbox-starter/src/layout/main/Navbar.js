@@ -9,7 +9,7 @@ import { logOut } from "../../redux/features/Auth/authSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const {email,role} = useSelector((state)=>state.auth)
+  const {user:{email,role}} = useSelector((state)=>state.auth)
   const handleSignout = () =>{
     signOut(auth).then(()=>{
       dispatch(logOut())
